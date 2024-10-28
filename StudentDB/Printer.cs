@@ -14,8 +14,9 @@ namespace StudentDB
             Console.WriteLine($"\n\tHANTERA STUDENTER\n" +
                             $"\t[1] - Registrera ny\n" +
                             $"\t[2] - Ändra befintlig\n" +
-                            $"\t[3] - Lista samtliga\n" +
-                            $"\t[4] - Avsluta");
+                            $"\t[3] - Radera\n" +
+                            $"\t[4] - Lista samtliga\n" +
+                            $"\t[5] - Avsluta");
             Console.Write("\n\tVälj: ");
         }
 

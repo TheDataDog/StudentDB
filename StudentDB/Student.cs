@@ -22,7 +22,10 @@ namespace StudentDB
 
         public override string? ToString()
         {
-            return $"Id: {StudentId} Namn: {FirstName} Efternamn: {LastName} Stad: {City}";
+            return $"Id: {StudentId.ToString().PadRight(5)} " +
+           $"Namn: {FirstName.PadRight(15)} " +
+           $"Efternamn: {LastName.PadRight(15)} " +
+           $"Stad: {City.PadRight(10)}";
         }
 
 

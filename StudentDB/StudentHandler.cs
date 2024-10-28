@@ -34,21 +34,32 @@ namespace StudentDB
             {
                 if (editPost == 1)
                 {
-                    storeStudent.ChangeFirstName(id, edit);
+                    storeStudent.ChangeFirstName(student, edit);
                     return true;
                 }
                 if (editPost == 2)
                 {
-                    storeStudent.ChangeLastName(id, edit);
+                    storeStudent.ChangeLastName(student, edit);
                     return true;
                 }
                 if (editPost == 3)
                 {
-                    storeStudent.ChangeCity(id, edit);
+                    storeStudent.ChangeCity(student, edit);
                     return true;
                 }
             }
             return false;
+        }
+
+        public bool DeleteExisting(int id)
+        {
+            Student student = GetStudent(id);
+            if(student != null)
+            {
+                storeStudent.Delete(student);
+            }
+            return false;
+
         }
 
         public List<Student> GetAllStudents()

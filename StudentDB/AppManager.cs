@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,10 +36,14 @@ namespace StudentDB
                         break;
 
                     case 3:
-                        ListAll();
+                        Delete();
                         break;
 
                     case 4:
+                        ListAll();
+                        break;
+
+                    case 5:
                         run = false;
                         break;
 
@@ -52,13 +57,13 @@ namespace StudentDB
 
         private void PrintDefaultMessage()
         {
-            Console.WriteLine("\n\tOgiltigt val! Välj 1-4!");
+            Console.WriteLine("\n\tOgiltigt val! Välj 1-5!");
             Console.ReadLine();
         }
 
         private void PrintError()
         {
-            Console.WriteLine($"\n\tVi hittade ingen student.");
+            Console.WriteLine($"\n\tVi hittade ingen matchande student.");
             Console.ReadLine();
         }
 
@@ -94,11 +99,15 @@ namespace StudentDB
                 return;
             }
             Printer.PrintIenumerableList(students);
-            int id = ChooseExisting();
-            if (!studentHandler.CheckIfValid(id))
+            int id = students[0].StudentId;
+            if(students.Count > 1)
             {
-                PrintError();
-                return;
+                id = ChooseExisting();
+                if (!studentHandler.CheckIfValid(id))
+                {
+                    PrintError();
+                    return;
+                }
             }
             int editPost = ChoosePost("editera");
             string edit = Helper.GetStringInput("Skriv in ändring: ");
@@ -134,6 +143,31 @@ namespace StudentDB
         {
             Printer.PrintIenumerableList(studentHandler.GetAllStudents());
             Console.ReadLine();
+        }
+
+        private void Delete()
+        {
+            int searchPost = ChoosePost("söka på");
+            string searchInput = Helper.GetStringInput("Skriv in sökord: ");
+            List<Student> students = studentHandler.GetMatches(searchPost, searchInput);
+            if (students == null)
+            {
+                PrintError();
+                return;
+            }
+            Printer.PrintIenumerableList(students);
+            int id = students[0].StudentId;
+            if (students.Count > 1)
+            {
+                id = ChooseExisting();
+                if (!studentHandler.CheckIfValid(id))
+                {
+                    PrintError();
+                    return;
+                }
+            }
+            bool success = studentHandler.DeleteExisting(id);
+            PrintMessage(success);
         }
     }
 }

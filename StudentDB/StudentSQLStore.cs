@@ -32,25 +32,27 @@ namespace StudentDB
             dbContext.SaveChanges();
         }
 
-        public void ChangeFirstName(int id, string edit)
+        public void ChangeFirstName(Student student, string edit)
         {
-            Student student = GetStudent(id);
             student.FirstName = edit;
             dbContext.SaveChanges();
         }
 
-        public void ChangeLastName(int id, string edit)
+        public void ChangeLastName(Student student, string edit)
         {
-            Student student = GetStudent(id);
             student.LastName = edit;
             dbContext.SaveChanges();
         }
 
-        public void ChangeCity(int id, string edit)
+        public void ChangeCity(Student student, string edit)
         {
-            Student student = GetStudent(id);
             student.City = edit;
             dbContext.SaveChanges();
+        }
+
+        public void Delete(Student student)
+        {
+            dbContext.Students.Remove(student);
         }
     }
 }
