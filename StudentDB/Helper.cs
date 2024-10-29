@@ -28,7 +28,16 @@ namespace StudentDB
 
         public static int GetIntInput()
         {
-            Int32.TryParse(Console.ReadLine(), out var input);
+            int input;
+            bool success;
+            do
+            {
+                success = Int32.TryParse(Console.ReadLine(), out input);
+                if (!success)
+                {
+                    Console.Write("\n\tEndast siffror, försök igen: ");
+                }
+            } while (!success);
             return input;
         }
     }

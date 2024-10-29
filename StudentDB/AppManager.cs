@@ -37,7 +37,7 @@ namespace StudentDB
                         break;
 
                     case 3:
-                        Delete();
+                        DeleteExisting();
                         break;
 
                     case 4:
@@ -49,37 +49,25 @@ namespace StudentDB
                         break;
 
                     default:
-                        PrintDefaultMessage();
+                        Printer.PrintDefaultMessage();
                         break;
 
                 }
             }
         }
 
-        private void PrintDefaultMessage()
-        {
-            Console.WriteLine("\n\tOgiltigt val! Välj 1-5!");
-            Console.ReadLine();
-        }
-
-        private void PrintError()
-        {
-            Console.WriteLine($"\n\tVi hittade ingen matchande student.");
-            Console.ReadLine();
-        }
-
-        private void PrintMessage(bool success)
-        {
-            if (success)
-            {
-                Console.WriteLine($"\n\tÄndringen är nu genomförd.");
-                Console.ReadLine();
-            }
-            else
-            {
-                PrintError();
-            }
-        }
+        //private void PrintMessage(bool success)
+        //{
+        //    if (success)
+        //    {
+        //        Console.WriteLine($"\n\tÄndringen är nu genomförd.");
+        //        Console.ReadLine();
+        //    }
+        //    else
+        //    {
+        //        Printer.PrintError();
+        //    }
+        //}
 
         private void RegisterNew()
         {
@@ -91,38 +79,70 @@ namespace StudentDB
 
         private void ChangeExisting()
         {
-            List<Student> students = SearchStudents();
+            List<Student> students = Search();
             if (students.Count == 0)
             {
-                PrintError();
+                Printer.PrintError();
                 return;
             }
-            int id;
-            if (students.Count > 1)
+            Printer.PrintList(students);
+            int id = Choose(students);
+            if(id == -1)
             {
-                Printer.PrintIenumerableList(students);
-                id = ChooseExisting();
-                if (!studentHandler.CheckIfValid(id))
-                {
-                    PrintError();
-                    return;
-                }
+                return;
             }
-            else
-            {
-                id = students[0].StudentId;
-            }
-            ModifyField field = ChooseField("editera");
-            string edit = Helper.GetStringInput("Skriv in ändring: ");
-            bool success = studentHandler.ChangeExisting(id, field, edit);
-            PrintMessage(success);
+            //if (students.Count > 1)
+            //{
+            //    Printer.PrintIenumerableList(students);
+            //    id = ChooseExisting();
+            //    if (!studentHandler.CheckIfValid(id))
+            //    {
+            //        PrintError();
+            //        return;
+            //    }
+            //}
+            //else
+            //{
+            //    id = students[0].StudentId;
+            //}
+            Edit(id);
+            //ModifyField field = ChooseField("editera");
+            //string edit = Helper.GetStringInput("Skriv in ändring: ");
+            //bool success = studentHandler.ChangeExisting(id, field, edit);
+            //PrintMessage(success);
         }
 
-        private List<Student> SearchStudents()
+        private List<Student> Search()
         {
             ModifyField field = ChooseField("söka på");
             string searchInput = Helper.GetStringInput("Skriv in sökord: ");
             return studentHandler.GetMatches(field, searchInput);
+        }
+
+        private int Choose(List<Student> students)
+        {
+            if (students.Count > 1)
+            {
+                int id = ChooseExisting();
+                if (!studentHandler.CheckIfValid(id))
+                {
+                    Printer.PrintError();
+                    return -1;
+                }
+                return id;
+            }
+            else
+            {
+                return CheckIfProceed(students);
+            }
+        }
+
+        private void Edit(int id)
+        {
+            ModifyField field = ChooseField("editera");
+            string edit = Helper.GetStringInput("Skriv in ändring: ");
+            bool success = studentHandler.ChangeExisting(id, field, edit);
+            Printer.PrintMessage(success);
         }
 
         private int ChooseExisting()
@@ -130,6 +150,31 @@ namespace StudentDB
             Console.Write($"\n\tSkriv in Id på den student du önskar välja: ");
             int id = Helper.GetIntInput();
             return id;
+        }
+
+        private int CheckIfProceed(List<Student> students)
+        {
+            int outcome = 0;
+            string input;
+            do
+            {
+                Console.Write("\n\tVill du fortsätta med ovanstående post (J/N): ");
+                input = Console.ReadLine().ToUpper();
+                if (input == "J")
+                {
+                    outcome = students[0].StudentId;
+                }
+                else if (input == "N")
+                {
+                    outcome = -1;
+                }
+                else
+                {
+                    Console.WriteLine("\n\tOgiltig inmatning! Välj (J/N)");
+                }
+            } while (input != "J" && input != "N");
+            return outcome;
+
         }
 
         private ModifyField ChooseField(string option)
@@ -153,35 +198,46 @@ namespace StudentDB
 
         private void ListAll()
         {
-            Printer.PrintIenumerableList(studentHandler.GetAllStudents());
+            Printer.PrintList(studentHandler.GetAllStudents());
             Console.ReadLine();
         }
 
-        private void Delete()
+        private void DeleteExisting()
         {
-            List<Student> students = SearchStudents();
+            List<Student> students = Search();
             if (students.Count == 0)
             {
-                PrintError();
+                Printer.PrintError();
                 return;
             }
-            int id;
-            if (students.Count > 1)
+            Printer.PrintList(students);
+            int id = Choose(students);
+            if (id == -1)
             {
-                Printer.PrintIenumerableList(students);
-                id = ChooseExisting();
-                if (!studentHandler.CheckIfValid(id))
-                {
-                    PrintError();
-                    return;
-                }
+                return;
             }
-            else
-            {
-                id = students[0].StudentId;
-            }
+            //int id;
+            //if (students.Count > 1)
+            //{
+            //    Printer.PrintIenumerableList(students);
+            //    id = ChooseExisting();
+            //    if (!studentHandler.CheckIfValid(id))
+            //    {
+            //        PrintError();
+            //        return;
+            //    }
+            //}
+            //else
+            //{
+            //    id = students[0].StudentId;
+            //}
+            Delete(id);
+        }
+
+        private void Delete(int id)
+        {
             bool success = studentHandler.DeleteExisting(id);
-            PrintMessage(success);
+            Printer.PrintMessage(success);
         }
     }
 }

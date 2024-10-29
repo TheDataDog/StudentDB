@@ -20,8 +20,33 @@ namespace StudentDB
             Console.Write("\n\tVälj: ");
         }
 
-        public static void PrintIenumerableList<T>(IEnumerable<T> list)
+        public static void PrintDefaultMessage()
         {
+            Console.WriteLine("\n\tOgiltigt val! Välj 1-5!");
+            Console.ReadLine();
+        }
+        public static void PrintError()
+        {
+            Console.WriteLine($"\n\tVi hittade ingen matchande student.");
+            Console.ReadLine();
+        }
+
+        public static void PrintMessage(bool success)
+        {
+            if (success)
+            {
+                Console.WriteLine($"\n\tÄndringen är nu genomförd.");
+                Console.ReadLine();
+            }
+            else
+            {
+                PrintError();
+            }
+        }
+
+        public static void PrintList<T>(List<T> list)
+        {
+            Console.WriteLine();
             foreach (T item in list)
             {
                 Console.WriteLine($"\t{item}");

@@ -15,7 +15,7 @@ namespace StudentDB
         List<Student> GetAllStudents();
         Student GetStudent(int id);
         void RegisterNew(Student student);
-        public void Delete(Student student);
+        void Delete(Student student);
 
     }
 }
