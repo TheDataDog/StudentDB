@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using StudentDB.Enum;
 
 namespace StudentDB
 {
@@ -27,22 +28,22 @@ namespace StudentDB
             storeStudent.RegisterNew(student);
         }
 
-        public bool ChangeExisting(int id, int editPost, string edit)
+        public bool ChangeExisting(int id, ModifyField field, string edit)
         {
             Student student = GetStudent(id);
             if (student != null)
             {
-                if (editPost == 1)
+                if (field == ModifyField.FirstName)
                 {
                     storeStudent.ChangeFirstName(student, edit);
                     return true;
                 }
-                if (editPost == 2)
+                if (field == ModifyField.LastName)
                 {
                     storeStudent.ChangeLastName(student, edit);
                     return true;
                 }
-                if (editPost == 3)
+                if (field == ModifyField.City)
                 {
                     storeStudent.ChangeCity(student, edit);
                     return true;
@@ -57,9 +58,9 @@ namespace StudentDB
             if(student != null)
             {
                 storeStudent.Delete(student);
+                return true;
             }
             return false;
-
         }
 
         public List<Student> GetAllStudents()
@@ -72,37 +73,25 @@ namespace StudentDB
             return storeStudent.GetStudent(id);
         }
 
-        public List<Student> GetMatches(int searchPost, string searchInput)
+        public List<Student> GetMatches(ModifyField field, string searchInput)
         {
             List<Student> students = GetAllStudents();
-            if (searchPost == 1)
+            if (field == ModifyField.FirstName)
             {
                 var matches = students.Where(s => s.FirstName == searchInput).ToList();
-                if(matches.Count == 0)
-                {
-                    return null;
-                }
                 return matches;
             }
-            if (searchPost == 2)
+            if (field == ModifyField.LastName)
             {
                 var matches = students.Where(s => s.LastName == searchInput).ToList();
-                if (matches.Count == 0)
-                {
-                    return null;
-                }
                 return matches;
             }
-            if (searchPost == 3)
+            if (field == ModifyField.City)
             {
                 var matches = students.Where(s => s.City == searchInput).ToList();
-                if (matches.Count == 0)
-                {
-                    return null;
-                }
                 return matches;
             }
-            return null;
+            return new List<Student>();
         }
 
         public bool CheckIfValid(int id)

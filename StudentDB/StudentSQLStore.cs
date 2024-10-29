@@ -53,6 +53,7 @@ namespace StudentDB
         public void Delete(Student student)
         {
             dbContext.Students.Remove(student);
+            dbContext.SaveChanges();
         }
     }
 }
