@@ -23,7 +23,6 @@ namespace StudentDB
 
             while (run)
             {
-                //studentHandler.CreateAStudent();
                 Printer.PrintMenu();
 
                 switch (Helper.GetIntInput())
@@ -56,19 +55,6 @@ namespace StudentDB
             }
         }
 
-        //private void PrintMessage(bool success)
-        //{
-        //    if (success)
-        //    {
-        //        Console.WriteLine($"\n\tÄndringen är nu genomförd.");
-        //        Console.ReadLine();
-        //    }
-        //    else
-        //    {
-        //        Printer.PrintError();
-        //    }
-        //}
-
         private void RegisterNew()
         {
             string firstName = Helper.GetStringInput("Skriv in förnamn: ");
@@ -91,25 +77,7 @@ namespace StudentDB
             {
                 return;
             }
-            //if (students.Count > 1)
-            //{
-            //    Printer.PrintIenumerableList(students);
-            //    id = ChooseExisting();
-            //    if (!studentHandler.CheckIfValid(id))
-            //    {
-            //        PrintError();
-            //        return;
-            //    }
-            //}
-            //else
-            //{
-            //    id = students[0].StudentId;
-            //}
             Edit(id);
-            //ModifyField field = ChooseField("editera");
-            //string edit = Helper.GetStringInput("Skriv in ändring: ");
-            //bool success = studentHandler.ChangeExisting(id, field, edit);
-            //PrintMessage(success);
         }
 
         private List<Student> Search()
@@ -154,25 +122,24 @@ namespace StudentDB
 
         private int CheckIfProceed(List<Student> students)
         {
-            int outcome = 0;
-            string input;
-            do
+            int outcome = -1;
+            while (true)
             {
-                Console.Write("\n\tVill du fortsätta med ovanstående post (J/N): ");
-                input = Console.ReadLine().ToUpper();
+                string input = Helper.GetStringInput("Vill du fortsätta med ovanstående post (J/N): ").ToUpper();
                 if (input == "J")
                 {
                     outcome = students[0].StudentId;
+                    break;
                 }
                 else if (input == "N")
                 {
-                    outcome = -1;
+                    break;
                 }
                 else
                 {
                     Console.WriteLine("\n\tOgiltig inmatning! Välj (J/N)");
                 }
-            } while (input != "J" && input != "N");
+            }
             return outcome;
 
         }
@@ -216,21 +183,6 @@ namespace StudentDB
             {
                 return;
             }
-            //int id;
-            //if (students.Count > 1)
-            //{
-            //    Printer.PrintIenumerableList(students);
-            //    id = ChooseExisting();
-            //    if (!studentHandler.CheckIfValid(id))
-            //    {
-            //        PrintError();
-            //        return;
-            //    }
-            //}
-            //else
-            //{
-            //    id = students[0].StudentId;
-            //}
             Delete(id);
         }
 

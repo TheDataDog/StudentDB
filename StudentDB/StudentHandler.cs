@@ -16,12 +16,6 @@ namespace StudentDB
             this.storeStudent = storeStudent;
         }
 
-        //public void CreateAStudent()
-        //{
-        //    Student student = new Student("Johanna", "Svensson", "Karlstad");
-        //    storeStudent.RegisterNew(student);
-        //}
-
         public void RegisterNew(string firstName, string lastName, string city)
         {
             Student student = CreateNew(firstName, lastName, city);
