@@ -72,18 +72,15 @@ namespace StudentDB
             List<Student> students = GetAllStudents();
             if (field == ModifyField.FirstName)
             {
-                var matches = students.Where(s => s.FirstName == searchInput).ToList();
-                return matches;
+                return students.Where(s => s.FirstName == searchInput).ToList();
             }
             if (field == ModifyField.LastName)
             {
-                var matches = students.Where(s => s.LastName == searchInput).ToList();
-                return matches;
+                return students.Where(s => s.LastName == searchInput).ToList();
             }
             if (field == ModifyField.City)
             {
-                var matches = students.Where(s => s.Address.City == searchInput).ToList();
-                return matches;
+                return students.Where(s => s.Address.City == searchInput).ToList();
             }
             return new List<Student>();
         }

@@ -91,12 +91,12 @@ namespace StudentDB
             if (students.Count > 1)
             {
                 int id = ChooseExisting();
-                if (!studentHandler.CheckIfValid(id))
+                if (students.Any(s => s.StudentId == id) && studentHandler.CheckIfValid(id))
                 {
-                    Printer.PrintError();
-                    return -1;
+                    return id;
                 }
-                return id;
+                Printer.PrintError();
+                return -1;
             }
             else
             {

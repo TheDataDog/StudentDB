@@ -47,8 +47,6 @@ namespace StudentDB
 
         public void ChangeCity(Student student, string edit)
         {
-
-
             student.Address.City = edit;
             dbContext.SaveChanges();
         }

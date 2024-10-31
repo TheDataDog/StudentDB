@@ -11,8 +11,6 @@
             AppManager appManager = new AppManager(studentHandler);
             appManager.Run();
 
-            // var myEnumMemberCount = Enum.GetNames(typeof(MyEnum)).Length;
-
         }
     }
 }
