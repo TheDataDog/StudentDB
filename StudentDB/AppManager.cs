@@ -11,7 +11,6 @@ namespace StudentDB
     internal class AppManager
     {
         private StudentHandler studentHandler;
-
         public AppManager(StudentHandler handler)
         {
             studentHandler = handler;

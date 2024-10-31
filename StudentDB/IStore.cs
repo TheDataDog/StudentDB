@@ -13,7 +13,7 @@ namespace StudentDB
         void ChangeFirstName(Student student, string edit);
         void ChangeLastName(Student student, string edit);
         List<Student> GetAllStudents();
-        Student GetStudent(int id);
+        Student? GetStudent(int id);
         void RegisterNew(Student student);
         void Delete(Student student);
 

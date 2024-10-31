@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,12 +19,12 @@ namespace StudentDB
 
         public List<Student> GetAllStudents()
         {
-            return dbContext.Students.ToList();
+            return dbContext.Students.Include(s => s.Address).ToList();
         }
 
-        public Student GetStudent(int id)
+        public Student? GetStudent(int id)
         {
-            return dbContext.Students.Where(s => s.StudentId == id).FirstOrDefault();
+            return dbContext.Students.Include(s => s.Address).FirstOrDefault(s => s.StudentId == id);
         }
 
         public void RegisterNew(Student student)
@@ -46,7 +47,9 @@ namespace StudentDB
 
         public void ChangeCity(Student student, string edit)
         {
-            student.City = edit;
+
+
+            student.Address.City = edit;
             dbContext.SaveChanges();
         }
 

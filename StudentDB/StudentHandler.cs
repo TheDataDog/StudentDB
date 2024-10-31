@@ -24,7 +24,7 @@ namespace StudentDB
 
         public bool ChangeExisting(int id, ModifyField field, string edit)
         {
-            Student student = GetStudent(id);
+            Student? student = GetStudent(id);
             if (student != null)
             {
                 if (field == ModifyField.FirstName)
@@ -48,7 +48,7 @@ namespace StudentDB
 
         public bool DeleteExisting(int id)
         {
-            Student student = GetStudent(id);
+            Student? student = GetStudent(id);
             if(student != null)
             {
                 storeStudent.Delete(student);
@@ -62,7 +62,7 @@ namespace StudentDB
             return storeStudent.GetAllStudents();
         }
 
-        private Student GetStudent(int id)
+        private Student? GetStudent(int id)
         {
             return storeStudent.GetStudent(id);
         }
@@ -82,7 +82,7 @@ namespace StudentDB
             }
             if (field == ModifyField.City)
             {
-                var matches = students.Where(s => s.City == searchInput).ToList();
+                var matches = students.Where(s => s.Address.City == searchInput).ToList();
                 return matches;
             }
             return new List<Student>();
@@ -90,7 +90,7 @@ namespace StudentDB
 
         public bool CheckIfValid(int id)
         {
-            Student student = GetStudent(id);
+            Student? student = GetStudent(id);
             if (student != null)
             {
                 return true;
@@ -100,7 +100,7 @@ namespace StudentDB
 
         private Student CreateNew(string firstName, string lastName, string city)
         {
-            return new Student(firstName, lastName, city);
+            return new Student(firstName, lastName, new Address(city));
         }
     }
 }

@@ -11,13 +11,18 @@ namespace StudentDB
         public int StudentId { get; set; }
         public string FirstName { get; set; } = "";
         public string LastName { get; set; } = "";
-        public string City { get; set; } = "";
+        public Address Address { get; set; }
 
-        public Student(string firstName, string lastName, string city)
+        public Student()
+        {
+            
+        }
+
+        public Student(string firstName, string lastName, Address address)
         {
             FirstName = firstName;
             LastName = lastName;
-            City = city;
+            Address = address;
         }
 
         public override string? ToString()
@@ -25,7 +30,7 @@ namespace StudentDB
             return $"Id: {StudentId.ToString().PadRight(5)} " +
            $"Namn: {FirstName.PadRight(15)} " +
            $"Efternamn: {LastName.PadRight(15)} " +
-           $"Stad: {City.PadRight(10)}";
+           $"Stad: {Address.City.PadRight(10)}";
         }
 
 
