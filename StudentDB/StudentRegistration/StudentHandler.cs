@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StudentDB.Enum;
+using StudentDB.Interface;
 
-namespace StudentDB
+namespace StudentDB.StudentRegistration
 {
     internal class StudentHandler
     {
@@ -49,7 +50,7 @@ namespace StudentDB
         public bool DeleteExisting(int id)
         {
             Student? student = GetStudent(id);
-            if(student != null)
+            if (student != null)
             {
                 storeStudent.Delete(student);
                 return true;

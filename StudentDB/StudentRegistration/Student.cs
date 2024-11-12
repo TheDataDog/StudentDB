@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StudentDB
+namespace StudentDB.StudentRegistration
 {
     internal class Student
     {
@@ -15,7 +15,7 @@ namespace StudentDB
 
         public Student()
         {
-            
+
         }
 
         public Student(string firstName, string lastName, Address address)

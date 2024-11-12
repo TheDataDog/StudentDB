@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using StudentDB.StudentRegistration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StudentDB
+namespace StudentDB.Interface
 {
     internal interface IStore
     {

@@ -1,19 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StudentDB.Enum;
+using StudentDB.Helpers;
+using StudentDB.LogIn;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StudentDB
+namespace StudentDB.StudentRegistration
 {
     internal class AppManager
     {
         private StudentHandler studentHandler;
-        public AppManager(StudentHandler handler)
+        private SystemUser currentUser;
+        public AppManager(StudentHandler handler, SystemUser systemUser)
         {
             studentHandler = handler;
+            currentUser = systemUser;
         }
 
         public void Run()
@@ -72,7 +76,7 @@ namespace StudentDB
             }
             Printer.PrintList(students);
             int id = Choose(students);
-            if(id == -1)
+            if (id == -1)
             {
                 return;
             }

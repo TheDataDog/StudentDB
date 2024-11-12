@@ -1,4 +1,7 @@
-﻿namespace StudentDB
+﻿using StudentDB.LogIn;
+using StudentDB.StudentRegistration;
+
+namespace StudentDB
 {
     internal class Program
     {
@@ -8,8 +11,15 @@
             //Logic to choose different storage, for example Json, other database
             StudentSQLStore dbHandler = new StudentSQLStore(dbContext);
             StudentHandler studentHandler = new StudentHandler(dbHandler);
-            AppManager appManager = new AppManager(studentHandler);
-            appManager.Run();
+            SystemUserDbContext systemUserDbContext = new SystemUserDbContext();
+            LogInHandler logInHandler = new LogInHandler(systemUserDbContext);
+            LogInManager logInManager = new LogInManager(logInHandler);
+            SystemUser systemUser = logInManager.LogIn();
+            if (systemUser != null)
+            {
+                AppManager appManager = new AppManager(studentHandler, systemUser);
+                appManager.Run();
+            }
 
         }
     }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StudentDB
+namespace StudentDB.Helpers
 {
     internal class Helper
     {
@@ -32,7 +32,7 @@ namespace StudentDB
             bool success;
             do
             {
-                success = Int32.TryParse(Console.ReadLine(), out input);
+                success = int.TryParse(Console.ReadLine(), out input);
                 if (!success)
                 {
                     Console.Write("\n\tEndast siffror, försök igen: ");
