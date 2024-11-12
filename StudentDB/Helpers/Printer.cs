@@ -30,6 +30,11 @@ namespace StudentDB.Helpers
             Console.WriteLine($"\n\tVi hittade ingen matchande student.");
             Console.ReadLine();
         }
+        public static void PrintAuthorizeMessage()
+        {
+            Console.WriteLine("\n\tDu har inte behörighet!");
+            Console.ReadLine();
+        }
 
         public static void PrintMessage(bool success)
         {

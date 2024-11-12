@@ -14,6 +14,7 @@ namespace StudentDB.StudentRegistration
     {
         private StudentHandler studentHandler;
         private SystemUser currentUser;
+        private MenyOption menuOption = new MenyOption();
         public AppManager(StudentHandler handler, SystemUser systemUser)
         {
             studentHandler = handler;
@@ -31,14 +32,35 @@ namespace StudentDB.StudentRegistration
                 switch (Helper.GetIntInput())
                 {
                     case 1:
+                        menuOption = MenyOption.RegisterNew;
+                        bool authorized = CheckIfAuthorized(menuOption, currentUser);
+                        if (!authorized)
+                        {
+                            Printer.PrintAuthorizeMessage();
+                            break;
+                        }
                         RegisterNew();
                         break;
 
                     case 2:
+                        menuOption = MenyOption.ChangeExisting;
+                        authorized = CheckIfAuthorized(menuOption, currentUser);
+                        if (!authorized)
+                        {
+                            Printer.PrintAuthorizeMessage();
+                            break;
+                        }
                         ChangeExisting();
                         break;
 
                     case 3:
+                        menuOption = MenyOption.DeleteExisting;
+                        authorized = CheckIfAuthorized(menuOption, currentUser);
+                        if (!authorized)
+                        {
+                            Printer.PrintAuthorizeMessage();
+                            break;
+                        }
                         DeleteExisting();
                         break;
 
@@ -47,6 +69,7 @@ namespace StudentDB.StudentRegistration
                         break;
 
                     case 5:
+                        currentUser = null;
                         run = false;
                         break;
 
@@ -56,6 +79,39 @@ namespace StudentDB.StudentRegistration
 
                 }
             }
+        }
+
+        private bool CheckIfAuthorized(MenyOption menyOption, SystemUser systemUser)
+        {
+            if (menuOption == MenyOption.RegisterNew)
+            {
+                if (currentUser.UserRole.RoleName == "Admin")
+                {
+                    return true;
+                }
+            }
+            if (menuOption == MenyOption.ChangeExisting)
+            {
+                if (currentUser.UserRole.RoleName == "Admin" || currentUser.UserRole.RoleName == "Student")
+                {
+                    return true;
+                }
+            }
+            if (menuOption == MenyOption.DeleteExisting)
+            {
+                if (currentUser.UserRole.RoleName == "Admin")
+                {
+                    return true;
+                }
+            }
+            if (menuOption == MenyOption.SetGrade)
+            {
+                if (currentUser.UserRole.RoleName == "Teacher")
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void RegisterNew()
